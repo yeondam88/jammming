@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
 import PlayList from "../PlayList/PlayList";
+import Spotify from "../../util/Spotify";
 import "./App.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchResults: [
-        { id: 1, name: "24k", artist: "Bruno Mars", album: "24k" }
-      ],
+      searchResults: [],
       playlistName: "Blah Blah",
       playlistTracks: [
         { id: 2, name: "first Love", artist: "IU", albun: "IU love" },
@@ -52,7 +51,11 @@ class App extends Component {
   }
 
   search(searchTerm) {
-    console.log(searchTerm);
+    Spotify.search(searchTerm).then(tracks => {
+      this.setState({
+        searchResults: tracks
+      });
+    });
   }
 
   render() {
